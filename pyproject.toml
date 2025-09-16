@@ -1,0 +1,27 @@
+[project]
+name = "weave"
+version = "0.1.0"
+requires-python = ">=3.12"
+dependencies = []
+
+[dependency-groups]
+dev = [
+    "fawltydeps>=0.20.0",
+    "poethepoet>=0.37.0",
+    "pyrefly>=0.33.0",
+    "ruff>=0.13.0",
+]
+
+[tool.poe.tasks]
+format = "ruff format"
+_ruff = "ruff check --fix"
+_fawltydeps = "fawltydeps --check-undeclared"
+lint = ["_ruff", "_fawltydeps"]
+typecheck = "pyrefly check --remove-unused-ignores ."
+fix = ["format", "lint", "typecheck"]
+
+[tool.ruff.lint]
+extend-select = ["I"]
+
+[tool.uv]
+package = true
